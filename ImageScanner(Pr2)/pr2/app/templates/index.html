@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Детекція обʼєктів</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 48rem; margin: 3rem auto; padding: 0 1rem; }
+    form { display: flex; gap: .75rem; align-items: center; margin: 1.5rem 0; flex-wrap: wrap; }
+    input[type="file"], input[type="number"] { padding: .45rem .6rem; }
+    button { padding: .5rem 1rem; font-size: 1rem; cursor: pointer; }
+    #result { min-height: 3rem; white-space: pre-wrap; }
+    .error { color: #b00020; }
+    .meta { margin: .5rem 0 1rem; font-weight: 600; }
+    .object-list { padding-left: 1.25rem; }
+    .object-item { margin: .5rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Детекція обʼєктів</h1>
+
+  <form id="detect-form">
+    <input id="image" type="file" name="image" accept="image/*" required>
+    <label>
+      Поріг confidence:
+      <input id="confidence" type="number" min="0.05" max="1" step="0.05" value="0.25">
+    </label>
+    <button type="submit">Знайти обʼєкти</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const form = document.getElementById('detect-form');
+    const result = document.getElementById('result');
+
+    function renderResults(payload) {
+      const objects = payload.objects || [];
+      const count = payload.count ?? objects.length;
+      const time = payload.processing_time_sec ?? 0;
+
+      let html = `
+        <div class="meta">Знайдено об'єктів: <strong>${count}</strong></div>
+        <div class="meta">Час inference: <strong>${time} с</strong></div>
+      `;
+
+      if (!objects.length) {
+        html += '<p>Об’єктів не знайдено за поточним порогом.</p>';
+        result.innerHTML = html;
+        return;
+      }
+
+      html += '<ul class="object-list">';
+      objects.forEach((item) => {
+        html += `
+          <li class="object-item">
+            <strong>${item.class}</strong> — confidence ${item.confidence}<br>
+            bbox: ${JSON.stringify(item.bbox)}
+          </li>
+        `;
+      });
+      html += '</ul>';
+      result.innerHTML = html;
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const file = document.getElementById('image').files[0];
+      const confidence = document.getElementById('confidence').value;
+      if (!file) return;
+
+      const data = new FormData();
+      data.append('image', file);
+
+      result.className = '';
+      result.textContent = 'Обробка…';
+
+      try {
+        const response = await fetch(`/api/detect?confidence=${encodeURIComponent(confidence)}`, {
+          method: 'POST',
+          body: data,
+        });
+        const payload = await response.json();
+
+        if (!response.ok) {
+          result.className = 'error';
+          result.textContent = 'Помилка: ' + (payload.detail || JSON.stringify(payload));
+          return;
+        }
+
+        renderResults(payload);
+      } catch (error) {
+        result.className = 'error';
+        result.textContent = 'Не вдалося звернутися до сервера.';
+      }
+    });
+  </script>
+</body>
+</html>
