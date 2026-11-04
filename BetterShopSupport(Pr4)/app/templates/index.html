@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Помічник служби підтримки</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    max-width: 72rem; margin: 2rem auto; padding: 0 1.25rem;
+    font: 16px/1.55 system-ui, sans-serif;
+  }
+  h1 { font-size: 1.5rem; margin-bottom: .25rem; }
+  p.lead { margin-top: 0; opacity: .75; }
+  .layout {
+    display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(18rem, 1fr);
+    gap: 1.25rem; align-items: start;
+  }
+  .panel {
+    border: 1px solid #8886; border-radius: .75rem; padding: 1rem; background: rgba(255,255,255,.02);
+  }
+  form { margin-bottom: 1rem; }
+  textarea {
+    width: 100%; min-height: 7rem; padding: .7rem .8rem; font: inherit;
+    border: 1px solid #8886; border-radius: .5rem; resize: vertical;
+  }
+  button {
+    margin-top: .75rem; padding: .55rem 1.1rem; font: inherit;
+    border: 0; border-radius: .5rem; background: #2563eb; color: #fff; cursor: pointer;
+  }
+  button[disabled] { opacity: .55; cursor: default; }
+  #chat {
+    display: grid; gap: .75rem; min-height: 10rem;
+  }
+  .message {
+    padding: .9rem 1rem; border: 1px solid #8885; border-radius: .75rem; white-space: pre-wrap;
+  }
+  .message.user { background: rgba(37,99,235,.08); }
+  .message.assistant { background: rgba(15,118,110,.08); }
+  .meta { margin-top: .65rem; font-size: .85rem; opacity: .75; }
+  .error { border-color: #dc2626; color: #991b1b; }
+  .card-grid { display: grid; gap: .6rem; }
+  .card-field {
+    display: flex; justify-content: space-between; gap: .5rem; border-bottom: 1px solid #8882; padding-bottom: .35rem;
+  }
+  .card-field strong { font-weight: 600; }
+  .value { text-align: right; }
+  .badge {
+    display: inline-block; padding: .15rem .45rem; border-radius: 999px; font-size: .75rem;
+    background: rgba(15,118,110,.12); border: 1px solid rgba(15,118,110,.2);
+  }
+</style>
+
+<h1>Помічник служби підтримки</h1>
+
+<div class="layout">
+  <div>
+    <form id="form">
+      <textarea id="question" placeholder="Почніть діалог" required></textarea>
+      <button type="submit">Надіслати</button>
+    </form>
+
+    <div id="chat" class="panel" aria-live="polite"></div>
+    <div class="meta" id="meta"></div>
+  </div>
+
+  <aside class="panel">
+    <h2>Картка звернення</h2>
+    <div class="card-grid">
+      <div class="card-field"><span>Сесія</span><strong class="value" id="card-session">—</strong></div>
+      <div class="card-field"><span>Тема</span><strong class="value" id="card-topic">—</strong></div>
+      <div class="card-field"><span>Основа</span><strong class="value" id="card-rules">—</strong></div>
+      <div class="card-field"><span>Потрібне уточнення</span><strong class="value" id="card-clarification">—</strong></div>
+      <div class="card-field"><span>Передати оператору</span><strong class="value" id="card-operator">—</strong></div>
+      <div class="card-field"><span>Номер замовлення</span><strong class="value" id="card-order">—</strong></div>
+    </div>
+  </aside>
+</div>
+
+<script>
+  const form = document.getElementById('form');
+  const question = document.getElementById('question');
+  const chat = document.getElementById('chat');
+  const meta = document.getElementById('meta');
+  const button = form.querySelector('button');
+  const sessionId = crypto.randomUUID ? crypto.randomUUID() : 'session-' + Date.now();
+
+  const cardEls = {
+    session: document.getElementById('card-session'),
+    topic: document.getElementById('card-topic'),
+    rules: document.getElementById('card-rules'),
+    clarification: document.getElementById('card-clarification'),
+    operator: document.getElementById('card-operator'),
+    order: document.getElementById('card-order'),
+  };
+
+  function renderMessage(role, text) {
+    const block = document.createElement('div');
+    block.className = `message ${role}`;
+    block.textContent = text;
+    chat.appendChild(block);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function renderCard(data) {
+    cardEls.session.textContent = data.session_id || '—';
+    cardEls.topic.textContent = data.topic || '—';
+    cardEls.rules.textContent = data.based_on_rules === 'yes' ? 'Так' : 'Ні';
+    cardEls.clarification.textContent = data.needs_clarification ? 'Так' : 'Ні';
+    cardEls.operator.textContent = data.transfer_to_operator ? 'Так' : 'Ні';
+    cardEls.order.textContent = data.order_number || '—';
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const text = question.value.trim();
+    if (!text) return;
+
+    button.disabled = true;
+    renderMessage('user', text);
+    question.value = '';
+    meta.textContent = 'Запит виконується…';
+
+    try {
+      const response = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId, question: text }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        renderMessage('assistant', typeof data.detail === 'string' ? data.detail : 'Не вдалося обробити звернення.');
+        meta.textContent = 'Помилка відповіді';
+        return;
+      }
+
+      renderMessage('assistant', data.answer || 'Без відповіді.');
+      renderCard({
+        session_id: data.session_id,
+        topic: data.topic,
+        based_on_rules: data.based_on_rules,
+        needs_clarification: data.needs_clarification,
+        transfer_to_operator: data.transfer_to_operator,
+        order_number: data.order_number,
+      });
+
+      const usage = data.usage || {};
+      const tokens = usage.total_tokens ?? `${usage.prompt_tokens || 0} / ${usage.completion_tokens || 0}`;
+      meta.textContent = `модель: ${data.model} · час: ${Number(data.elapsed).toFixed(2)} с · токени: ${tokens}`;
+    } catch (error) {
+      renderMessage('assistant', 'Не вдалося звʼязатися із застосунком.');
+      meta.textContent = 'Помилка звʼязку';
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
