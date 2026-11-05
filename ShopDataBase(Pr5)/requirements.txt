@@ -1,0 +1,11 @@
+# Читання налаштувань із .env
+python-dotenv>=1.0
+
+# FastAPI веб-рівень і ASGI-сервер
+fastapi>=0.115
+uvicorn[standard]>=0.30
+
+# Локальні ембедінги, векторний індекс і пошук BM25
+sentence-transformers>=3.0
+numpy>=1.26
+rank-bm25>=0.2
