@@ -1,0 +1,15 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.vscode/
+.DS_Store
+*.log
+
+# Project-specific generated artifacts
+samples/own/
