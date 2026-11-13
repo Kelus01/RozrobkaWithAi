@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="uk">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Помічник за базою знань</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { max-width: 68rem; margin: 2rem auto; padding: 0 1rem;
+         font: 16px/1.55 system-ui, sans-serif; }
+  h1 { font-size: 1.4rem; margin-bottom: .25rem; }
+  .lead, .meta { opacity: .7; }
+  #status { margin: 1rem 0; font-size: .9rem; }
+  .warn { color: #dc2626; }
+  form { display: grid; gap: .7rem; margin-bottom: 1rem; }
+  .row { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+  textarea, select, button { font: inherit; border: 1px solid #8886; border-radius: .4rem; }
+  textarea { flex: 1; min-width: 16rem; min-height: 3.5rem; padding: .6rem; resize: vertical; }
+  select { padding: .4rem; }
+  button { padding: .5rem 1rem; background: #2563eb; color: white; cursor: pointer; }
+  button:disabled { opacity: .55; cursor: default; }
+  #answer, .source, .fragment { border: 1px solid #8886; border-radius: .4rem; padding: .7rem .9rem; }
+  #answer { min-height: 3rem; white-space: pre-wrap; }
+  .badge { display: inline-block; border-radius: 1rem; padding: .1rem .6rem; margin-bottom: .5rem; }
+  .found { background: #16a34a33; }
+  .missing { background: #dc262633; }
+  .error { border-color: #dc2626 !important; }
+  .layout { display: grid; grid-template-columns: minmax(0, 3fr) minmax(16rem, 2fr); gap: 1.2rem; }
+  @media (max-width: 48rem) { .layout { grid-template-columns: 1fr; } }
+  h2 { font-size: 1rem; margin: 0 0 .5rem; }
+  .source, .fragment { margin-bottom: .5rem; font-size: .92rem; }
+  .source p, .fragment p { white-space: pre-wrap; margin: .4rem 0 0; }
+  .meta { font-size: .82rem; }
+  details { margin-top: 1rem; }
+  summary { cursor: pointer; }
+  .empty { opacity: .65; }
+</style>
+
+<h1>Помічник за базою знань магазину «Сузірʼя»</h1>
+<p class="lead">Відповідь формується за документами з <code>docs/</code> і містить джерела.</p>
+<div id="status" role="status"></div>
+
+<form id="form">
+  <div class="row">
+    <textarea id="question" placeholder="Чи можу повернути товар, якщо він не підійшов?" required></textarea>
+    <button id="send" type="submit">Запитати</button>
+  </div>
+  <div class="row">
+    <label for="product">Товар (необовʼязково):</label>
+    <select id="product">
+      <option value="">будь-який</option>
+      <option>Оріон X2</option><option>Вега S</option>
+      <option>Альтаїр AX3</option><option>Сіріус R10</option>
+    </select>
+    <span class="meta">Аудиторію та чинність документів обмежує сервер.</span>
+  </div>
+</form>
+
+<div class="layout">
+  <section>
+    <div id="badge"></div>
+    <div id="answer" class="empty">Відповіді ще немає.</div>
+    <div id="meta" class="meta"></div>
+  </section>
+  <section>
+    <h2>Джерела відповіді</h2>
+    <div id="sources" class="empty">Джерела зʼявляться разом із відповіддю.</div>
+  </section>
+</div>
+
+<details>
+  <summary>Фрагменти, які бачила модель</summary>
+  <div id="retrieved" class="empty">Ще нічого.</div>
+</details>
+
+<script>
+  const form = document.getElementById('form');
+  const send = document.getElementById('send');
+  const statusBox = document.getElementById('status');
+  const answerBox = document.getElementById('answer');
+  const badge = document.getElementById('badge');
+  const sourcesBox = document.getElementById('sources');
+  const retrievedBox = document.getElementById('retrieved');
+  const metaBox = document.getElementById('meta');
+
+  function showEmpty(element, text) {
+    element.className = 'empty';
+    element.textContent = text;
+  }
+
+  async function loadStatus() {
+    try {
+      const response = await fetch('/api/status');
+      const data = await response.json();
+      if (data.ready && data.embedding_model_matches === false) {
+        statusBox.textContent = `Індекс побудовано моделлю ${data.model}, яка не збігається з налаштуваннями. Виконайте python ingest.py.`;
+        statusBox.className = 'warn';
+      } else {
+        statusBox.textContent = data.ready
+          ? `Індекс готовий: ${data.chunks} фрагментів із ${data.documents} документів; модель ${data.model}.`
+          : (data.hint || 'Індекс не збудовано.');
+        statusBox.className = data.ready ? '' : 'warn';
+      }
+    } catch {
+      statusBox.textContent = 'Не вдалося дізнатися стан індексу.';
+      statusBox.className = 'warn';
+    }
+  }
+
+  function renderSources(sources) {
+    sourcesBox.replaceChildren();
+    if (!sources.length) {
+      showEmpty(sourcesBox, 'Відповідь не спирається на джерела.');
+      return;
+    }
+    sourcesBox.className = '';
+    for (const source of sources) {
+      const card = document.createElement('article');
+      card.className = 'source';
+      const heading = document.createElement('strong');
+      heading.textContent = `[${source.ref}] ${source.metadata.title || source.source}`;
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.textContent = `${source.source} · ${source.metadata.heading || ''} · редакція ${source.metadata.updated || 'невідома'}`;
+      card.append(heading, meta);
+      sourcesBox.append(card);
+    }
+  }
+
+  function renderRetrieved(hits) {
+    retrievedBox.replaceChildren();
+    if (!hits.length) {
+      showEmpty(retrievedBox, 'Моделі не передано жодного фрагмента.');
+      return;
+    }
+    retrievedBox.className = '';
+    for (const [i, hit] of hits.entries()) {
+      const card = document.createElement('article');
+      card.className = 'fragment';
+      const heading = document.createElement('div');
+      heading.className = 'meta';
+      heading.textContent = `${i + 1}. ${hit.metadata.title || hit.source} · ${hit.metadata.heading || ''} · score ${hit.score.toFixed(4)}`;
+      const text = document.createElement('p');
+      text.textContent = hit.text;
+      card.append(heading, text);
+      retrievedBox.append(card);
+    }
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    send.disabled = true;
+    badge.textContent = '';
+    answerBox.className = 'empty';
+    answerBox.textContent = 'Готую відповідь…';
+    try {
+      const product = document.getElementById('product').value;
+      const filters = product ? { product } : {};
+      const response = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question: document.getElementById('question').value,
+          filters,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        answerBox.className = 'error';
+        answerBox.textContent = data.detail || `Помилка ${response.status}`;
+        renderSources([]);
+        renderRetrieved([]);
+        metaBox.textContent = '';
+        return;
+      }
+
+      answerBox.className = '';
+      answerBox.textContent = data.answer;
+      badge.className = `badge ${data.found ? 'found' : 'missing'}`;
+      badge.textContent = data.found ? 'За базою знань' : 'У базі немає відповіді';
+      renderSources(data.sources || []);
+      renderRetrieved(data.retrieved || []);
+      const elapsed = data.elapsed || {};
+      const usage = data.usage || {};
+      metaBox.textContent = [
+        data.model ? `Модель: ${data.model}` : '',
+        `Пошук: ${((elapsed.retrieval || 0) * 1000).toFixed(0)} мс`,
+        `Генерація: ${((elapsed.generation || 0) * 1000).toFixed(0)} мс`,
+        usage.prompt_tokens != null ? `Токени: ${usage.prompt_tokens} запит / ${usage.completion_tokens} відповідь` : '',
+      ].filter(Boolean).join(' · ');
+    } catch {
+      answerBox.className = 'error';
+      answerBox.textContent = 'Не вдалося звʼязатися із застосунком.';
+      renderSources([]);
+      renderRetrieved([]);
+      metaBox.textContent = '';
+    } finally {
+      send.disabled = false;
+    }
+  });
+
+  loadStatus();
+</script>
+</html>
