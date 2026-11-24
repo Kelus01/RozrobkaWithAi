@@ -1,0 +1,833 @@
+[
+  {
+    "run": 1,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:44:33+02:00",
+    "sample_id": "d01",
+    "kind": "повернення оформлено",
+    "draft_id": "617d037d",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.8-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "timeout",
+      "message": "Провайдер не надіслав відповідь вчасно.",
+      "retryable": true,
+      "request_id": "617d037d"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  },
+  {
+    "run": 1,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:44:41+02:00",
+    "sample_id": "d02",
+    "kind": "відмова за правилами",
+    "draft_id": "bb780df0",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.8-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "unavailable",
+      "message": "Провайдер тимчасово недоступний.",
+      "retryable": true,
+      "request_id": "bb780df0"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  },
+  {
+    "run": 1,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:44:44+02:00",
+    "sample_id": "d03",
+    "kind": "відмова за правилами",
+    "draft_id": "470b0a49",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.8-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "rate_limit",
+      "message": "Провайдер тимчасово обмежив кількість запитів.",
+      "retryable": true,
+      "request_id": "470b0a49"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  },
+  {
+    "run": 1,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:44:45+02:00",
+    "sample_id": "d04",
+    "kind": "повернення за дефектом",
+    "draft_id": "7bfef0ed",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.8-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "rate_limit",
+      "message": "Провайдер тимчасово обмежив кількість запитів.",
+      "retryable": true,
+      "request_id": "7bfef0ed"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  },
+  {
+    "run": 1,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:44:47+02:00",
+    "sample_id": "d05",
+    "kind": "скасування виконано",
+    "draft_id": "8a37accb",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.8-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "rate_limit",
+      "message": "Провайдер тимчасово обмежив кількість запитів.",
+      "retryable": true,
+      "request_id": "8a37accb"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  },
+  {
+    "run": 2,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:48:02+02:00",
+    "sample_id": "d01",
+    "kind": "повернення оформлено",
+    "draft_id": "1294a39f",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.8-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "unavailable",
+      "message": "Провайдер тимчасово недоступний.",
+      "retryable": true,
+      "request_id": "1294a39f"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  },
+  {
+    "run": 2,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:48:17+02:00",
+    "sample_id": "d02",
+    "kind": "відмова за правилами",
+    "draft_id": "a81839a4",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.8-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "timeout",
+      "message": "Провайдер не надіслав відповідь вчасно.",
+      "retryable": true,
+      "request_id": "a81839a4"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  },
+  {
+    "run": 2,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:48:25+02:00",
+    "sample_id": "d03",
+    "kind": "відмова за правилами",
+    "draft_id": "9dbf106c",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.8-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "unavailable",
+      "message": "Провайдер тимчасово недоступний.",
+      "retryable": true,
+      "request_id": "9dbf106c"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  },
+  {
+    "run": 2,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:48:43+02:00",
+    "sample_id": "d04",
+    "kind": "повернення за дефектом",
+    "draft_id": "f90c5776",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.8-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "unavailable",
+      "message": "Провайдер тимчасово недоступний.",
+      "retryable": true,
+      "request_id": "f90c5776"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  },
+  {
+    "run": 2,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:48:47+02:00",
+    "sample_id": "d05",
+    "kind": "скасування виконано",
+    "draft_id": "09a13534",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.8-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "rate_limit",
+      "message": "Провайдер тимчасово обмежив кількість запитів.",
+      "retryable": true,
+      "request_id": "09a13534"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.8-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  },
+  {
+    "run": 3,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:49:52+02:00",
+    "sample_id": "d01",
+    "kind": "повернення оформлено",
+    "draft_id": "9f205a4c",
+    "status": "done",
+    "provider": "openai",
+    "model": "gemini-3.6-flash",
+    "fallback": false,
+    "attempts": 1,
+    "elapsed": {
+      "first_token": 3.553,
+      "total": 3.556
+    },
+    "usage": {
+      "completion_tokens": 19,
+      "prompt_tokens": 461,
+      "total_tokens": 1057,
+      "completion_tokens_details": null,
+      "prompt_tokens_details": null
+    },
+    "warnings": [
+      "Перевірте, чи в чернетці згадані важливі номери: 10412."
+    ],
+    "error": null,
+    "text": "Доброго дня! Заявку R-5001 на повернення робота-пи",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.6-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      }
+    ]
+  },
+  {
+    "run": 3,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:49:56+02:00",
+    "sample_id": "d02",
+    "kind": "відмова за правилами",
+    "draft_id": "cf780cec",
+    "status": "done",
+    "provider": "openai",
+    "model": "gemini-3.6-flash",
+    "fallback": false,
+    "attempts": 1,
+    "elapsed": {
+      "first_token": 3.614,
+      "total": 3.616
+    },
+    "usage": {
+      "completion_tokens": 22,
+      "prompt_tokens": 372,
+      "total_tokens": 968,
+      "completion_tokens_details": null,
+      "prompt_tokens_details": null
+    },
+    "warnings": [
+      "Перевірте, чи в чернетці згадані важливі номери: 10412, R-5001."
+    ],
+    "error": null,
+    "text": "12 немає можливості, оскільки витратні матеріали належної якості не підлягають повер",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.6-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      }
+    ]
+  },
+  {
+    "run": 3,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:49:59+02:00",
+    "sample_id": "d03",
+    "kind": "відмова за правилами",
+    "draft_id": "f0346c2a",
+    "status": "done",
+    "provider": "openai",
+    "model": "gemini-3.6-flash",
+    "fallback": false,
+    "attempts": 1,
+    "elapsed": {
+      "first_token": 3.507,
+      "total": 3.51
+    },
+    "usage": {
+      "completion_tokens": 19,
+      "prompt_tokens": 392,
+      "total_tokens": 988,
+      "completion_tokens_details": null,
+      "prompt_tokens_details": null
+    },
+    "warnings": [
+      "Перевірте, чи в чернетці згадані важливі номери: 10421."
+    ],
+    "error": null,
+    "text": "Доброго дня! Дякуємо за звернення до служби підтримки «Сузірʼ",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.6-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      }
+    ]
+  },
+  {
+    "run": 3,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:50:14+02:00",
+    "sample_id": "d04",
+    "kind": "повернення за дефектом",
+    "draft_id": "799be3f2",
+    "status": "done",
+    "provider": "openai",
+    "model": "gemini-3.6-flash",
+    "fallback": false,
+    "attempts": 2,
+    "elapsed": {
+      "first_token": 14.719,
+      "total": 14.728
+    },
+    "usage": {
+      "completion_tokens": 24,
+      "prompt_tokens": 452,
+      "total_tokens": 1048,
+      "completion_tokens_details": null,
+      "prompt_tokens_details": null
+    },
+    "warnings": [
+      "Перевірте, чи в чернетці згадані важливі номери: 10421, R-5002."
+    ],
+    "error": null,
+    "text": "ники або повернемо кошти на ваш вибір.\n\n4.  **Refining and Checking Constraints:**",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.6-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.6-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      }
+    ]
+  },
+  {
+    "run": 3,
+    "run_size": 5,
+    "recorded_at": "2026-11-24T19:50:32+02:00",
+    "sample_id": "d05",
+    "kind": "скасування виконано",
+    "draft_id": "6abb34f1",
+    "status": "failed",
+    "provider": "openai",
+    "model": "gemini-3.6-flash",
+    "fallback": false,
+    "attempts": 3,
+    "elapsed": {},
+    "usage": null,
+    "warnings": [],
+    "error": {
+      "kind": "rate_limit",
+      "message": "Провайдер тимчасово обмежив кількість запитів.",
+      "retryable": true,
+      "request_id": "6abb34f1"
+    },
+    "text": "",
+    "status_events": [
+      {
+        "status": "queued"
+      },
+      {
+        "status": "running"
+      },
+      {
+        "status": "running",
+        "attempt": 1,
+        "provider_attempt": 1,
+        "provider": "openai",
+        "model": "gemini-3.6-flash",
+        "fallback": false,
+        "detail": "спроба 1 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 2,
+        "provider_attempt": 2,
+        "provider": "openai",
+        "model": "gemini-3.6-flash",
+        "fallback": false,
+        "detail": "спроба 2 з 3"
+      },
+      {
+        "status": "running",
+        "attempt": 3,
+        "provider_attempt": 3,
+        "provider": "openai",
+        "model": "gemini-3.6-flash",
+        "fallback": false,
+        "detail": "спроба 3 з 3"
+      }
+    ]
+  }
+]
